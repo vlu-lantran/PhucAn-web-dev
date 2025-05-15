@@ -1,0 +1,51 @@
+.slider-container {
+  width: 100%;
+  max-width: 1  00px; /* tăng max-width cho cảm giác rộng rãi hơn */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px; 
+}
+
+.slider-frame {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 16px;
+  position: relative;
+  aspect-ratio: 16 / 5; /* tỉ lệ ngang hơn, phù hợp với banner */
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* dùng contain để ảnh hiển thị đầy đủ */
+  border-radius: 16px;
+  background-color: #f8f8f8; /* màu nền để ảnh không bị hụt */
+}
+
+/* Dot style */
+.dots-container {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #000;
+}
+
+.slide {
+  transition: opacity 0.8s ease-in-out;
+}

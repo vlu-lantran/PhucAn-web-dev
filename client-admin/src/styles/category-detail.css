@@ -1,0 +1,248 @@
+/* Tổng quan về container */
+.category-detail {
+  max-width: 800px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.brand-detail-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Header của danh mục */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Breadcrumb (dẫn đường) */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Hiệu ứng hover cho breadcrumb */
+.breadcrumb span {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb span:hover {
+  color: #0866ff;
+}
+
+.breadcrumb i {
+  color: #9ca3af;
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* Tiêu đề của danh mục */
+.category-detail-title {
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+  letter-spacing: 1px; /* Thêm khoảng cách giữa các chữ cái */
+}
+
+/* Form chi tiết danh mục */
+.category-detail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Nhóm các trường nhập liệu */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Nhãn của các trường nhập liệu */
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Các ô nhập liệu */
+.form-input {
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #333;
+  background: #f8f9fa;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Khi ô nhập liệu được focus */
+.form-input:focus {
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+/* Khi ô nhập liệu ở chế độ readonly */
+.form-input.readonly {
+  background: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Nút hành động của form */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+/* Style cho các nút */
+.btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* Nút thêm mới */
+.btn-add {
+  background: #28a745;
+  color: white;
+}
+
+.btn-add:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+/* Hiệu ứng hover cho form-input */
+.form-input:hover {
+  border-color: #007bff;
+}
+
+/* Media query cho thiết bị có chiều rộng màn hình nhỏ */
+@media (max-width: 768px) {
+  .category-detail {
+    margin: 30px 20px;
+    padding: 20px;
+  }
+
+  .category-detail-title {
+    font-size: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+}
+
+/* Media query cho thiết bị có chiều rộng màn hình rất nhỏ */
+@media (max-width: 576px) {
+  .category-detail {
+    padding: 15px;
+  }
+
+  .category-detail-title {
+    font-size: 18px;
+  }
+
+  .form-input {
+    font-size: 13px;
+    padding: 10px 15px;
+  }
+
+  .btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+  }
+}
+
+/* Thêm border-radius cho các nút trong modal (nếu có) */
+.modal-content .btn {
+  border-radius: 10px;
+}
+
+/* Cập nhật breadcrumb để đảm bảo nó không bị ảnh hưởng khi có thông báo */
+.breadcrumb-container {
+  position: relative;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.global-msg {
+  max-width: 400px; /* Giới hạn chiều rộng tối đa */
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của bố cục */
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 500;
+  margin: 20px auto;
+}
+
+/* Thông báo lỗi */
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.image-preview img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
