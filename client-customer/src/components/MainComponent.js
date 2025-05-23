@@ -6,8 +6,10 @@ import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Product from './ProductComponent';
 import ProductDetail from './ProductDetailComponent';
-import Myprofile from './MyprofileComponent';
 import CategoryComponent from './CategoryComponent';
+import NewsComponent from './NewsComponent';
+import NewsDetailComponent from './NewsDetailComponent';
+import AboutUsComponent from './AboutUsComponent';
 
 class Main extends Component {
   render() {
@@ -26,8 +28,10 @@ class Main extends Component {
             <Route path="/product/category/:cid" element={<Product />} />
             <Route path="/product/search/:keyword" element={<Product />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/myprofile" element={<Myprofile />} />
             <Route path="/category" element={<CategoryComponent />} />
+            <Route path="/news" element={<NewsComponent />} />
+            <Route path="/news/:id" element={<NewsDetailComponent />} />
+            <Route path="/about-us" element={<AboutUsComponent />} />
           </Routes>
         </main>
 
@@ -56,7 +60,7 @@ class Main extends Component {
               </div>
 
               {/* Cột phải */}
-              <div className="col-md-6 text-md-end mt-4 mt-md-0" >
+              <div className="ccol-md-4 d-flex flex-column"  style={{ marginTop: '20px', marginRight: 155,}}>
                 <p className="mb-2">
                   <i className="fas fa-phone-alt me-2" style={{ marginRight: 20, }}></i> 0123 456 789
                 </p>

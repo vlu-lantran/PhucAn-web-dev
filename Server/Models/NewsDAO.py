@@ -55,6 +55,7 @@ class NewsDAO:
     @staticmethod
     def select_by_id(_id):
         db = get_db()
+        db.news.update_one({"_id": ObjectId(_id)}, {"$inc": {"view": 1}})
         news = db.news.find_one({"_id": ObjectId(_id)})
         return convert_objectid_to_str(news)
 
@@ -86,14 +87,22 @@ class NewsDAO:
         news_list = list(db.news.find().sort("created_at", -1).limit(top))
         return convert_objectid_to_str(news_list)
 
+
+
     @staticmethod
     def top_hot(top):
         db = get_db()
-        today = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        tomorrow = today + datetime.timedelta(days=1)
 
-        hot_news = list(db.news.find({
-            "created_at": {"$gte": today, "$lt": tomorrow}
-        }).sort("views", -1).limit(top))
+        hot_news = list(
+            db.news.find()
+            .sort([("views", -1), ("created_at", -1)])  # Sắp xếp: view giảm dần, rồi đến created_at giảm dần
+            .limit(top)
+        )
 
         return convert_objectid_to_str(hot_news)
+
+    @staticmethod
+    def increment_views(news_id):
+        db = get_db()
+        if ObjectId.is_valid(news_id):
+            db.news.update_one({"_id": ObjectId(news_id)}, {"$inc": {"views": 1}})

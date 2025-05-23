@@ -11,7 +11,7 @@ class ContactComponent extends Component {
   };
 
   contactListRef = createRef();
-  autoScrollFrame = null;
+  autoScrollInterval = null;
   resumeTimeout = null;
   isPaused = false;
 
@@ -20,7 +20,7 @@ class ContactComponent extends Component {
   }
 
   componentWillUnmount() {
-    cancelAnimationFrame(this.autoScrollFrame);
+    clearInterval(this.autoScrollInterval);
     clearTimeout(this.resumeTimeout);
   }
 
@@ -28,9 +28,11 @@ class ContactComponent extends Component {
     try {
       const response = await axios.get('/api/admin/contacts');
       const data = response.data;
+      // Tối ưu số lần lặp lại dữ liệu
+      const repeatedData = Array(6).fill(data).flat();
       this.setState(
         {
-          contactList: [...data, ...data, ...data, ...data, ...data, ...data, ...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data],
+          contactList: repeatedData,
           loading: false,
         },
         this.startAutoScroll
@@ -47,29 +49,23 @@ class ContactComponent extends Component {
     const container = this.contactListRef.current;
     if (!container) return;
 
-    const scroll = () => {
+    this.autoScrollInterval = setInterval(() => {
       if (this.isPaused) return;
 
       if (container.scrollLeft >= container.scrollWidth / 2) {
         container.scrollLeft = 0;
       } else {
-        container.scrollLeft += 0.5;
+        container.scrollLeft += 1;
       }
-
-      this.autoScrollFrame = requestAnimationFrame(scroll);
-    };
-
-    this.autoScrollFrame = requestAnimationFrame(scroll);
+    }, 16); // tương đương ~60fps
   };
 
   pauseAndResumeAutoScroll = () => {
     this.isPaused = true;
-    cancelAnimationFrame(this.autoScrollFrame);
     clearTimeout(this.resumeTimeout);
 
     this.resumeTimeout = setTimeout(() => {
       this.isPaused = false;
-      this.startAutoScroll();
     }, 3000); // sau 3 giây cuộn lại
   };
 
@@ -114,7 +110,12 @@ class ContactComponent extends Component {
           {contactList.map((contact, index) => (
             <div key={index} className="contact-card">
               {contact.image ? (
-                <img src={contact.image} alt="contact" className="contact-logo" />
+                <img
+                  src={contact.image}
+                  alt="contact"
+                  className="contact-logo"
+                  loading="lazy"
+                />
               ) : (
                 <span>Không có hình ảnh</span>
               )}

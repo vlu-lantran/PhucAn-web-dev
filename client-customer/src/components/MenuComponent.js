@@ -71,7 +71,11 @@ class Menu extends Component {
                   <img src="./assets/Logo-AI-VECTOR.png" alt="Home" style={{ width: '50px', height: '50px' }} />
                 </Link>
               </li>
-
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
+              </li>
               <li
                 className={`nav-item relative dropdown ${isOpen ? 'show' : ''}`}
                 onMouseEnter={() => {
@@ -98,13 +102,13 @@ class Menu extends Component {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to="#">
+                <Link className="nav-link" to="/news">
                   News
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="#">
-                  Service
+                <Link className="nav-link" to="/about-us">
+                    About Us
                 </Link>
               </li>
             </ul>

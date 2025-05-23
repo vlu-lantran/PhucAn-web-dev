@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../css/BrandComponent.css';
+import '../css/Category.css';
 
 const CategoryComponent = () => {
   const [categories, setCategories] = useState([]);
+  const [visibleIndexes, setVisibleIndexes] = useState([]);
 
   useEffect(() => {
     fetchCategories();
@@ -14,18 +15,26 @@ const CategoryComponent = () => {
     try {
       const res = await axios.get('/api/customer/categories');
       setCategories(res.data);
+
+      res.data.forEach((_, index) => {
+        setTimeout(() => {
+          setVisibleIndexes((prev) => [...prev, index]);
+        }, index * 150);
+      });
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
   };
-
   return (
     <div className="category-section">
       <div className="container">
         <h2 className="section-title text-center">Category</h2>
         <div className="brand-grid">
-          {categories.map((cat) => (
-            <div className="brand-card" key={cat._id}>
+          {categories.map((cat, index) => (
+            <div
+              className={`brand-card ${visibleIndexes.includes(index) ? 'visible' : ''}`}
+              key={cat._id}
+            >
               <Link to={`/product/category/${cat._id}`} className="brand-link">
                 <div className="brand-image-container">
                   <img

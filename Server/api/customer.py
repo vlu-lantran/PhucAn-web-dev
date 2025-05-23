@@ -178,3 +178,49 @@ def get_all_brands():
         return jsonify(brands), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@customer_bp.route('/news', methods=['GET'])
+def get_all_news():
+    from Models.NewsDAO import NewsDAO
+    try:
+        news_list = NewsDAO.select_all(limit=100)
+        return jsonify(news_list), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@customer_bp.route('/news/top/<int:top>', methods=['GET'])
+def get_top_news(top):
+    from Models.NewsDAO import NewsDAO
+    try:
+        news_list = NewsDAO.select_top_new(top)
+        return jsonify(news_list), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@customer_bp.route('/news/hot/<int:top>', methods=['GET'])
+def get_hot_news(top):
+    from Models.NewsDAO import NewsDAO
+    try:
+        hot_news = NewsDAO.top_hot(top)
+        return jsonify(hot_news), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@customer_bp.route('/news/<string:id>', methods=['GET'])
+def get_news_by_id(id):
+    from Models.NewsDAO import NewsDAO
+    try:
+        if not ObjectId.is_valid(id):
+            return jsonify({'error': 'Invalid news ID'}), 400
+
+        # Tăng views mỗi lần truy cập
+        NewsDAO.increment_views(id)
+
+        news = NewsDAO.select_by_id(id)
+        if news:
+            return jsonify(news), 200
+        else:
+            return jsonify({'error': 'News not found'}), 404
+    except Exception as e:
+        print(f"Error in get_news_by_id: {e}")
+        return jsonify({'error': str(e)}), 400
