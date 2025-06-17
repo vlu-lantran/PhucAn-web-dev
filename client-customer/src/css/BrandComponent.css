@@ -1,133 +1,91 @@
-.news-container {
+/* Category and Brand styles with smooth animation */
+
+.category-section,
+.brand-section {
   padding: 40px 20px;
-  font-family: 'Roboto', Arial, sans-serif;
-  background-color: #f5f7fa;
-  max-width: 1200px;
-  margin: 0 auto;
+  background: #f8f9fa;
+  color: #212529;
 }
 
-.hot-news-section, .news-today-section {
-  margin-bottom: 50px;
+.category-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 30px;
 }
 
-.hot-news-section h2, .news-today-section h2 {
-  margin-bottom: 25px;
-  text-align: center;
-}
-
-.hot-news-list, .news-today-list {
+.category-grid,
+.brand-grid {
   display: flex;
-  gap: 20px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
-.hot-news-item, .news-today-item {
-  background-color: #e6f0fa;
-  padding: 15px;
-  border-radius: 10px;
-  width: 240px;
-  text-align: center;
-  border: 2px solid transparent;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+.brand-card,
+.category-card {
+  background-color: #eaf2f3;
+  border-radius: 16px;
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 250px;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.hot-news-item:hover, .news-today-item:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
-}
-
-.hot-news-item {
-  height: 360px;
-}
-
-.news-today-item {
-  height: 300px;
-}
-
-.news-image-container {
-  position: relative;
-  width: 100%;
-  height: 180px;
   overflow: hidden;
-  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.news-image {
-  width: 100%;
+.brand-card.visible,
+.category-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.brand-image-container,
+.category-image-container {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.4s ease-in-out;
+  justify-content: space-between;
 }
 
-.hot-news-item:hover .news-image, .news-today-item:hover .news-image {
-  transform: scale(1.08);
+.brand-image,
+.category-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
-.hot-news-item h3, .news-today-item h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 10px 0;
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.brand-footer,
+.category-footer {
+  background-color: #0d1614;
+  padding: 12px;
+  display: flex;
+  justify-content: flex-end;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
-.hot-news-item p, .news-today-item p {
-  font-size: 13px;
-  color: #5f6b7a;
-  margin-bottom: 10px;
-  line-height: 1.5;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  flex-grow: 1;
-}
-
-.news-today-item:focus-within {
-  border-color: #3498db;
-}
-
-button {
-  background: linear-gradient(to right, #28a745, #218838);
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  cursor: pointer;
+.see-more-btn {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #1e7e34;
-  transform: scale(1.05);
-}
 
-button:active {
-  transform: scale(0.97);
+.see-more-btn:hover {
+  transform: scale(1.05); /* Phóng to khi hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
-}
-
-.loading-text {
-  text-align: center;
-  font-size: 18px;
-  color: #888;
-  padding: 40px 0;
+.see-more-btn i {
+  margin-left: 5px;
 }

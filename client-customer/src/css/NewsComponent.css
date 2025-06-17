@@ -100,7 +100,7 @@
   border-color: #3498db;
 }
 
-button {
+.button-news {
   background: linear-gradient(to right, #28a745, #218838);
   color: white;
   border: none;
@@ -113,7 +113,7 @@ button {
   letter-spacing: 0.5px;
 }
 
-button:hover {
+.button-news:hover {
   background-color: #1e7e34;
   transform: scale(1.05);
 }

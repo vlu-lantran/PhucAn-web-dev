@@ -33,9 +33,9 @@ class ProductDetail extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.item !== prevProps.item && this.props.item) {
       console.log('Props item:', this.props.item); // Debug
-      const cat = this.props.item.category;
-      const categoryId = typeof cat === 'string' ? cat : cat?._id || '';
-
+      const category = this.props.item.category;
+      const categoryId = category && typeof category === 'object' ? category._id : (category || '');
+      
       this.setState({
         txtID: this.props.item._id || '',
         txtName: this.props.item.name || '',
@@ -174,6 +174,10 @@ class ProductDetail extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  applyFormat = (command, value = null) => {
+    document.execCommand(command, false, value);
   };
 
   handleSubmit = (e) => {
@@ -343,14 +347,34 @@ class ProductDetail extends Component {
             </div>
             <div className="form-group">
               <label>Chi tiết</label>
-              <textarea
-                value={this.state.txtDetail}
-                onChange={(e) => this.setState({ txtDetail: e.target.value })}
-                className="form-input"
-                rows="4"
-                placeholder="Mô tả chi tiết sản phẩm"
-              ></textarea>
+
+              <div className="editor-tools">
+                <button type="button" onClick={() => this.applyFormat('bold')}>B</button>
+                <button type="button" onClick={() => this.applyFormat('italic')}>I</button>
+                <button type="button" onClick={() => this.applyFormat('underline')}>U</button>
+                <button type="button" onClick={() => this.applyFormat('justifyLeft')}>Canh trái</button>
+                <button type="button" onClick={() => this.applyFormat('justifyCenter')}>Canh giữa</button>
+                <button type="button" onClick={() => this.applyFormat('justifyRight')}>Canh phải</button>
+                <button type="button" onClick={() => this.applyFormat('removeFormat')}>Xóa định dạng</button>
+              </div>
+
+              <div
+                ref={this.editorRef}
+                className="content-editor"
+                contentEditable
+                style={{
+                  minHeight: '150px',
+                  border: '1px solid #ccc',
+                  padding: '10px',
+                  borderRadius: '4px',
+                }}
+                onInput={() => {
+                  this.setState({ txtDetail: this.editorRef.current.innerHTML });
+                }}
+                dangerouslySetInnerHTML={{ __html: this.state.txtDetail }}
+              ></div>
             </div>
+
             <div className="form-group">
               <label>Ảnh</label>
               <input

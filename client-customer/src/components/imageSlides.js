@@ -1,29 +1,52 @@
 import '../imageslider.css';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export const ImageSlider = () => {
-  const slides = [
-    { src: '/assets/sale.jpg' },
-    { src: '/assets/sale2.jpg' },
-    { src: '/assets/sale3.jpg' }
-  ];
-
+  const [slides, setSlides] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true); // <-- Thêm loading state
 
-  // ✅ Auto-scroll
   useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const response = await axios.get('/api/customer/sliders');
+        console.log('Slides:', response.data);
+        setSlides(response.data);
+      } catch (error) {
+        console.error('Lỗi khi tải sliders:', error);
+      } finally {
+        setLoading(false); // <-- Tắt loading sau khi lấy xong dữ liệu
+      }
+    };
+
+    fetchSlides();
+  }, []);
+
+  useEffect(() => {
+    if (slides.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === slides.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // chuyển slide mỗi 3 giây
+    }, 3000);
 
-    return () => clearInterval(interval); // cleanup khi unmount
-  }, [slides.length]);
+    return () => clearInterval(interval);
+  }, [slides]);
 
   const handleDotClick = (index) => {
     setCurrentIndex(index);
   };
+
+  const isExternalLink = (url) => {
+    return /^https?:\/\//.test(url);
+  };
+
+  if (loading) {
+    return <p className="text-center" style={{ color: "black" }}>Loading...</p>;
+  }
 
   return (
     <div className="slider-container">
@@ -34,7 +57,23 @@ export const ImageSlider = () => {
             className={`slide ${index === currentIndex ? 'active' : ''}`}
             style={{ display: index === currentIndex ? 'block' : 'none' }}
           >
-            <img src={slide.src} alt={`slide-${index}`} className="slide-image" />
+            {isExternalLink(slide.link) ? (
+              <a href={slide.link} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={slide.src || slide.image}
+                  alt={slide.name || `slide-${index}`}
+                  className="slide-image"
+                />
+              </a>
+            ) : (
+              <Link to={slide.link}>
+                <img
+                  src={slide.src || slide.image}
+                  alt={slide.name || `slide-${index}`}
+                  className="slide-image"
+                />
+              </Link>
+            )}
           </div>
         ))}
       </div>

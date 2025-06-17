@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/NewsComponent.css';
+import '../css/NewsComponent.css'; // Import CSS cho NewsComponent
 
 const NewsCard = ({ news, onClick, isHot }) => (
   <div className={isHot ? 'hot-news-item' : 'news-today-item'}>
@@ -14,7 +14,7 @@ const NewsCard = ({ news, onClick, isHot }) => (
     </div>
     <h3>{news.title}</h3>
     <p>{news.description || 'Click "Read More" to see details...'}</p>
-    <button onClick={() => onClick(news._id)}>Read More</button>
+    <button className="button-news" onClick={() => onClick(news._id)}>Read More</button>
   </div>
 );
 

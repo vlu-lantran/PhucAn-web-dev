@@ -71,3 +71,33 @@
 .arrow-btn.right {
   right: 10px;
 }
+
+
+/* Mobile tối ưu */
+@media (max-width: 768px) {
+  .contact-card {
+    width: 80px;
+    padding: 6px;
+  }
+
+  .contact-logo {
+    height: 60px;
+  }
+
+  .arrow-btn {
+    font-size: 16px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .contact-container {
+    padding: 12px 0;
+  }
+
+  .contact-list {
+    padding: 0 16px;
+    gap: 12px;
+  }
+}

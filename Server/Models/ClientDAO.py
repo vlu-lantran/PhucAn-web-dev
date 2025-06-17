@@ -2,7 +2,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 from pymongo.errors import PyMongoError
 from utils.db import get_db, connect_mongoengine
-from .Models import Brand, Contact
+from .Models import Brand, Contact, Slider
 from datetime import datetime
 
 connect_mongoengine()
@@ -137,6 +137,66 @@ class ContactDAO:
                 return contact_dict
             else:
                 print(f"[INFO] Contact with ID {pk} not found.")
+                return None
+        except Exception as e:
+            print(f"[ERROR] select_by_id failed: {e}")
+            return None
+
+
+class SilderDAO:
+    @staticmethod
+    def select_all():
+        db = get_db()
+        sliders = list(db.sliders.find({}))  # Bỏ filter projection để lấy tất cả các trường
+        for slider in sliders:
+            slider['_id'] = str(slider['_id'])
+            if 'created_at' in slider and isinstance(slider['created_at'], datetime):
+                slider['created_at'] = slider['created_at'].isoformat()
+        return sliders
+
+
+    @staticmethod
+    def insert(slider_data):
+        db = get_db()
+        slider_data['_id'] = ObjectId()
+        db.sliders.insert_one(slider_data)
+        return convert_objectid_to_str(slider_data)
+
+    @staticmethod
+    def update(slider_data):
+        db = get_db()
+        slider = db.sliders.find_one({"_id": slider_data['_id']})
+        if slider:
+            db.sliders.update_one({"_id": slider_data['_id']}, {"$set": slider_data})
+        return convert_objectid_to_str(slider_data)
+
+    @staticmethod
+    def delete(_id):
+        db = get_db()
+        slider = db.sliders.find_one({"_id": _id})
+        if slider:
+            db.sliders.delete_one({"_id": _id})
+        return convert_objectid_to_str(slider)
+
+    @staticmethod
+    def select_by_id(pk):
+        try:
+            if not ObjectId.is_valid(pk):
+                print(f"[ERROR] Invalid ObjectId: {pk}")
+                return None
+
+            slider = Slider.objects(_id=ObjectId(pk)).first()
+            
+            if slider:
+                slider_dict = slider.to_mongo().to_dict()
+                for key, value in slider_dict.items():
+                    if isinstance(value, ObjectId):
+                        slider_dict[key] = str(value)
+                    elif isinstance(value, datetime):
+                        slider_dict[key] = value.isoformat()
+                return slider_dict
+            else:
+                print(f"[INFO] Slider with ID {pk} not found.")
                 return None
         except Exception as e:
             print(f"[ERROR] select_by_id failed: {e}")

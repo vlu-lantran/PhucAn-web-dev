@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
 import MyContext from '../contexts/MyContext';
-import '../App'; // Import CSS tùy chỉnh
+import '../css/menu.css'; // Import CSS cho Menu
 
 class Menu extends Component {
   static contextType = MyContext;
@@ -13,7 +13,8 @@ class Menu extends Component {
     this.state = {
       categories: [],
       txtKeyword: '',
-      isOpen: false,
+      isOpen: false, // dropdown menu desktop
+      isMobileMenuOpen: false, // menu trên mobile
       windowWidth: window.innerWidth,
     };
   }
@@ -29,20 +30,31 @@ class Menu extends Component {
 
   handleResize = () => {
     this.setState({ windowWidth: window.innerWidth });
+    if (window.innerWidth >= 992 && this.state.isMobileMenuOpen) {
+      // Nếu chuyển sang desktop thì đóng menu mobile
+      this.setState({ isMobileMenuOpen: false });
+    }
   };
 
   toggleDropdown = () => {
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
+  toggleMobileMenu = () => {
+    this.setState((prevState) => ({ isMobileMenuOpen: !prevState.isMobileMenuOpen }));
+  };
+
+  toggleMobileDropdown = () => {
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
+  };
+
   render() {
-    const { txtKeyword, isOpen, windowWidth } = this.state;
+    const { txtKeyword, isOpen, windowWidth, isMobileMenuOpen } = this.state;
 
     const cates = this.state.categories.map((item, index) => {
-      console.log('Danh mục:', item);
       return (
         <li key={item._id || index} className="nav-item">
-          <Link className="nav-link" to={'/product/category/' + item._id}>
+          <Link className="nav-link" to={'/product/category/' + item._id} onClick={() => this.setState({ isMobileMenuOpen: false, isOpen: false })}>
             {item.name || 'Chưa có tên'}
           </Link>
         </li>
@@ -52,32 +64,38 @@ class Menu extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <div className="container">
+          {/* Nút hamburger toggle menu mobile */}
           <button
             className="navbar-toggler"
             type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
             aria-controls="navbarNav"
-            aria-expanded="false"
+            aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
             aria-label="Toggle navigation"
+            onClick={this.toggleMobileMenu}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
+          {/* Logo */}
+          <Link className="navbar-brand" to="/" onClick={() => this.setState({ isMobileMenuOpen: false, isOpen: false })}>
+            <img src="./assets/Logo-AI-VECTOR.png" alt="Home" style={{ width: '50px', height: '50px' }} />
+          </Link>
+
+          {/* Menu */}
+          <div
+            className={`collapse navbar-collapse ${isMobileMenuOpen ? 'show' : ''}`}
+            id="navbarNav"
+          >
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  <img src="./assets/Logo-AI-VECTOR.png" alt="Home" style={{ width: '50px', height: '50px' }} />
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/" onClick={() => this.setState({ isMobileMenuOpen: false })}>
                   Home
                 </Link>
               </li>
+
+              {/* Dropdown cho Product */}
               <li
-                className={`nav-item relative dropdown ${isOpen ? 'show' : ''}`}
+                className={`nav-item dropdown ${isOpen ? 'show' : ''}`}
                 onMouseEnter={() => {
                   if (windowWidth >= 992) this.setState({ isOpen: true });
                 }}
@@ -85,13 +103,28 @@ class Menu extends Component {
                   if (windowWidth >= 992) this.setState({ isOpen: false });
                 }}
               >
-                <Link className="nav-link" to="/category">
+                {/* Khi màn hình nhỏ, dùng onClick để mở dropdown */}
+                <Link
+                  className="nav-link"
+                  to="/category"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded={isOpen ? 'true' : 'false'}
+                  onClick={(e) => {
+                    if (windowWidth < 992) {
+                      e.preventDefault(); // ngăn reload trang
+                      this.toggleMobileDropdown();
+                    } else {
+                      this.setState({ isOpen: true });
+                    }
+                  }}
+                >
                   Product
                 </Link>
 
                 <ul
-                  className={`dropdown-menu-custom ${this.state.isOpen ? 'd-block' : 'd-none'}`}
-                  style={{ position: 'absolute', zIndex: 1000 }}
+                  className={`dropdown-menu ${isOpen ? 'show' : ''}`}
+                  style={{ position: windowWidth >= 992 ? 'absolute' : 'static', zIndex: 1000 }}
                 >
                   {cates.length > 0 ? (
                     cates
@@ -102,18 +135,28 @@ class Menu extends Component {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to="/news">
+                <Link className="nav-link" to="/news" onClick={() => this.setState({ isMobileMenuOpen: false })}>
                   News
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about-us">
-                    About Us
+                <Link className="nav-link" to="/about-us" onClick={() => this.setState({ isMobileMenuOpen: false })}>
+                  About Us
                 </Link>
               </li>
             </ul>
 
-            <form className="form-inline my-2 my-lg-0" onSubmit={(e) => this.btnSearchClick(e)}>
+            {/* Mycart button */}
+            <Link to="/mycart" className="mycart-link nav-link mr-2" onClick={() => this.setState({ isMobileMenuOpen: false })}>
+              <i className="fas fa-shopping-cart"></i> Mycart
+            </Link>
+
+            {/* Form tìm kiếm */}
+            <form
+              className="form-inline my-2 my-lg-0"
+              onSubmit={(e) => this.btnSearchClick(e)}
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
               <input
                 className="form-control mr-sm-2"
                 type="search"
@@ -136,26 +179,19 @@ class Menu extends Component {
     e.preventDefault();
     if (this.state.txtKeyword.trim()) {
       this.props.navigate('/product/search/' + this.state.txtKeyword);
+      this.setState({ isMobileMenuOpen: false }); // Đóng menu mobile khi tìm kiếm
     }
   }
 
-  // Không còn dùng token ở đây
   apiGetCategories() {
     axios
       .get('/api/customer/categories')
       .then((res) => {
-        console.log('API trả về:', res.data);
         this.setState({ categories: res.data });
       })
       .catch((err) => {
         console.error('Lỗi khi lấy danh mục:', err.response?.data || err.message);
       });
-  }
-
-  lnkLogoutClick() {
-    this.context.setToken('');
-    this.context.setCustomer(null);
-    this.context.setMycart([]);
   }
 }
 

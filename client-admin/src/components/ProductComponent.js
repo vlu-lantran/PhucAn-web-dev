@@ -239,10 +239,15 @@ class Product extends Component {
     .get(`/api/admin/products?page=${page}`)
     .then((res) => {
       const result = res.data;
+      console.log("API result:", res.data);
+      const pageSize = result.pageSize || 10;
+      const totalItems = result.totalItems || 0;
+      const noPages = Math.ceil(totalItems / pageSize);
+
       this.setState({
         products: result.products,
-        noPages: result.noPages,
-        curPage: result.curPage,
+        curPage: result.page || 1,
+        noPages: noPages,
       });
     })
     .catch((error) => {

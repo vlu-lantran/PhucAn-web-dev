@@ -8,14 +8,22 @@ const BrandComponent = () => {
   const navigate = useNavigate(); // 👈 Dùng hook navigate
 
   useEffect(() => {
-    axios.get('/api/customer/brands')
-      .then(res => {
-        setBrands(res.data);
-      })
-      .catch(err => {
-        console.error('Error fetching brands:', err);
-      });
-  }, []);
+  axios.get('/api/customer/brands')
+    .then(res => {
+      setBrands(res.data);
+
+      // Thêm class visible sau khi DOM render
+      setTimeout(() => {
+        const cards = document.querySelectorAll('.brand-card');
+        cards.forEach(card => {
+          card.classList.add('visible');
+        });
+      }, 100); // Delay để đảm bảo đã render
+    })
+    .catch(err => {
+      console.error('Error fetching brands:', err);
+    });
+}, []);
 
   const handleSeeMoreClick = () => {
     navigate('/about-us'); // 👈 Điều hướng đến /about-us
@@ -23,7 +31,7 @@ const BrandComponent = () => {
 
   return (
     <div className="container">
-      <h2 className="section-title text-center mb-4">MORE ABOUT OUR COMPANY</h2>
+      <h2 className="section-title text-center">MORE ABOUT OUR COMPANY</h2>
       <div className="brand-grid">
         {brands.map((brand, index) => (
           <div className="brand-card" key={index}>

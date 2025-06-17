@@ -129,10 +129,18 @@ def get_products():
         if not products:
             return jsonify({"message": "No products found"}), 404
 
-        return jsonify({"products": products, "page": page}), 200
+        total_items = ProductDAO.count_all()  # Phải có hàm này để đếm tổng sản phẩm
+
+        return jsonify({
+            "products": products,
+            "page": page,
+            "totalItems": total_items,
+            "pageSize": limit
+        }), 200
     except Exception as e:
         print(f"Error in get_products: {e}")
         return jsonify({"error": "An error occurred while fetching products"}), 500
+
 
 @admin_bp.route('/products/<string:id>', methods=['GET'])
 def get_products_by_id(id):
@@ -268,6 +276,8 @@ def delete_product(id):
         return jsonify({'error': "Product not found"}), 404
 
     return jsonify({'success': True, 'message': 'Product deleted successfully'}), 200
+
+
 
 # ==== CUSTOMER ROUTES ====
 
@@ -490,6 +500,62 @@ def delete_contact(id):
             return jsonify({'error': 'Contact not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+# ==== SLIDER ROUTES ====
+@admin_bp.route('/sliders', methods=['GET'])
+def get_all_sliders():
+    from Models.ClientDAO import SilderDAO
+    try:
+        contacts = SilderDAO.select_all()
+        return jsonify(contacts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@admin_bp.route('/sliders/<string:id>', methods=['GET'])
+def get_slider_by_id(id):
+    from Models.ClientDAO import SilderDAO
+    try:
+        slider = SilderDAO.select_by_id(id)
+        if slider:
+            return jsonify(slider), 200
+        else:
+            return jsonify({'error': 'Slider not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
+@admin_bp.route('/sliders', methods=['POST'])
+def create_slider():
+    from Models.ClientDAO import SilderDAO
+    try:
+        data = request.get_json()
+        if not data.get('name'):
+            return jsonify({'error': 'Missing required field: name'}), 400
 
+        result = SilderDAO.insert(data)
+        return jsonify(result), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+@admin_bp.route('/sliders/<string:id>', methods=['PUT'])
+def update_slider(id):
+    from Models.ClientDAO import SilderDAO
+    try:
+        data = request.get_json()
+        data['_id'] = ObjectId(id)
+        result = SilderDAO.update(data)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+@admin_bp.route('/sliders/<string:id>', methods=['DELETE'])
+def delete_slider(id):
+    from Models.ClientDAO import SilderDAO
+    try:
+        result = SilderDAO.delete(ObjectId(id))
+        if result:
+            return jsonify({'success': True, 'message': 'Slider deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'Slider not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 

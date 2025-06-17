@@ -33,9 +33,13 @@ class ProductDAO:
     @staticmethod
     def select_by_skip_limit(skip, limit):
         db = get_db()
-        products = list(db.products.find().skip(skip).limit(limit))  # Dùng skip và limit
-        return convert_objectid_to_str(products)  # Chuyển ObjectId thành chuỗi trước khi trả về
+        products = list(db.products.find().skip(skip).limit(limit))
+        return convert_objectid_to_str(products)
 
+    @staticmethod
+    def count_all():
+        db = get_db()
+        return db.products.count_documents({})
     @staticmethod
     def insert(product_data):
         from .Models import CategoryInfo
@@ -96,6 +100,13 @@ class ProductDAO:
     def update(product):
         db = get_db()
 
+        # Truy xuất thông tin category từ frontend
+        category_data = product['category']
+        category_obj = {
+            "_id": ObjectId(category_data['_id']),
+            "name": category_data['name']
+        }
+
         updated_data = {
             "name": product['name'],
             "price": float(product['price']),
@@ -103,7 +114,7 @@ class ProductDAO:
             "packing": int(product.get('packing', 0)),
             "detail": product.get('detail', ''),
             "image": product.get('image', ''),
-            "category": product['category']
+            "category": category_obj
         }
 
         result = db.products.update_one(
@@ -111,7 +122,12 @@ class ProductDAO:
             {"$set": updated_data}
         )
 
-        return convert_objectid_to_str(product)
+        return {
+            "success": result.modified_count > 0,
+            "message": "Cập nhật thành công" if result.modified_count > 0 else "Không có thay đổi nào",
+            "product": convert_objectid_to_str(product)
+        }
+
 
 
     @staticmethod

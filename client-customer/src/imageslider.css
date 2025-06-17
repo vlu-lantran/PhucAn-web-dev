@@ -25,6 +25,13 @@
   background-color: #f8f8f8; /* màu nền để ảnh không bị hụt */
 }
 
+.slide a {
+  pointer-events: auto;
+  cursor: pointer;
+  display: inline-block; /* Đảm bảo thẻ a bao bọc đúng */
+}
+
+
 /* Dot style */
 .dots-container {
   margin-top: 12px;

@@ -218,7 +218,6 @@
   left: 50%;
   transform: translateX(-50%);
 }
-
 .product-card {
   background: white;
   border-radius: 10px;
@@ -263,7 +262,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .section-title {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .product-image {
@@ -277,117 +276,42 @@
   .product-price {
     font-size: 14px;
   }
+
+  .product-info {
+    padding: 12px;
+  }
 }
 
+/* Responsive for phones */
 @media (max-width: 576px) {
+  .product-card {
+    margin: 0 10px;
+  }
+
   .section-title {
-    font-size: 24px;
+    font-size: 20px;
+    margin-bottom: 1rem;
   }
 
   .product-image {
-    height: 150px;
-  }
-}
-/*menu*/
-.navbar {
-  padding: 15px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-nav {
-  display: flex;
-  align-items: center;
-}
-
-.nav-item {
-  margin-right: 20px;
-}
-
-.nav-link {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333 !important;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #2196F3 !important;
-}
-
-.form-inline {
-  display: flex;
-  align-items: center;
-}
-
-.form-control {
-  border-radius: 20px 0 0 20px;
-  border: 1px solid #ddd;
-  padding: 8px 15px;
-  font-size: 14px;
-  width: 200px;
-  background: #f8f9fa;
-}
-
-.form-control:focus {
-  border-color: #2196F3;
-  box-shadow: none;
-}
-
-.btn-search {
-  border-radius: 0 20px 20px 0;
-  background: #2196F3;
-  color: white;
-  padding: 8px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  transition: background 0.3s ease;
-}
-
-.btn-search:hover {
-  background: #0b7dda;
-}
-
-.btn-search i {
-  margin-right: 5px;
-}
-
-/* Responsive */
-@media (max-width: 991px) {
-  .navbar-nav {
-    padding-top: 10px;
+    height: 160px;
   }
 
-  .nav-item {
-    margin: 10px 0;
+  .product-name {
+    font-size: 15px;
+    white-space: normal; /* Cho phép tên dài xuống dòng */
+    overflow: visible;
   }
 
-  .form-inline {
-    width: 100%;
-    margin-top: 10px;
+  .product-price {
+    font-size: 13px;
   }
 
-  .form-control {
-    width: 70%;
-  }
-
-  .btn-search {
-    width: 30%;
+  .product-info {
+    padding: 10px 8px;
   }
 }
 
-@media (max-width: 576px) {
-  .form-control {
-    width: 60%;
-    font-size: 12px;
-  }
-
-  .btn-search {
-    width: 40%;
-    font-size: 12px;
-  }
-}
 /*inform*/
 .inform-container {
   background: #f8f9fa;
@@ -608,186 +532,7 @@
     font-size: 12px;
   }
 }
-/*mycart*/
-.mycart-container {
-  padding: 40px 0;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-}
 
-h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #333;
-  text-transform: uppercase;
-  position: relative;
-  margin-bottom: 30px;
-}
-
-h2::after {
-  content: '';
-  width: 60px;
-  height: 4px;
-  background: #2196F3;
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.table {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.thead-dark {
-  background: #343a40;
-  color: #fff;
-}
-
-th, td {
-  vertical-align: middle !important;
-  text-align: center;
-}
-
-.cart-image {
-  border-radius: 5px;
-  object-fit: cover;
-}
-
-.btn-danger {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.btn-success {
-  padding: 8px 15px;
-  font-size: 16px;
-}
-
-.btn-danger i, .btn-success i {
-  margin-right: 5px;
-}
-
-.text-right {
-  text-align: right !important;
-}
-
-.font-weight-bold {
-  font-weight: 600;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  h2 {
-    font-size: 24px;
-  }
-
-  .table {
-    font-size: 14px;
-  }
-
-  .cart-image {
-    width: 50px;
-    height: 50px;
-  }
-
-  .btn-danger, .btn-success {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .table-responsive {
-    border: none;
-  }
-
-  .table {
-    font-size: 12px;
-  }
-
-  th, td {
-    padding: 8px;
-  }
-
-  .cart-image {
-    width: 40px;
-    height: 40px;
-  }
-
-  .btn-danger {
-    display: block;
-    width: 100%;
-  }
-}
-/*product*/
-.product-container {
-  padding: 40px 0;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-}
-
-h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #333;
-  text-transform: uppercase;
-  position: relative;
-  margin-bottom: 30px;
-}
-
-h2::after {
-  content: '';
-  width: 60px;
-  height: 4px;
-  background: #2196F3;
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.product-card {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-}
-
-.product-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: 15px;
-}
-
-.product-name {
-  font-size: 18px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.product-price {
-  font-size: 16px;
-  font-weight: 600;
-  color: #e74c3c;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -821,167 +566,7 @@ h2::after {
     margin-bottom: 20px;
   }
 }
-/* Product Detail */
-.product-detail-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.product-detail-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.product-image-col {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  justify-content: center; /* Căn giữa hình ảnh */
-  align-items: center; /* Căn giữa theo chiều dọc */
-}
-
-.product-image {
-  width: 100%;
-  max-height: 300px; /* Chiều cao tối đa, nhưng không cố định */
-  object-fit: contain; /* Dành cho <img> */
-  background-size: contain; /* Dành cho background-image */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #ffffff;
-  border-radius: 5px;
-}
-
-.product-info-col {
-  flex: 1;
-  min-width: 0;
-}
-
-.sales-info {
-  border: 1px solid #ffffff;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.sales-info h5 {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.product-detail-section h5 {
-  margin-bottom: 10px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.btn {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #0056b3;
-}
-
-.my-5 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.mt-4 {
-  margin-top: 1.5rem;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-
-.table td {
-  padding: 10px;
-  vertical-align: middle;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.font-weight-bold {
-  font-weight: 600;
-  color: #333;
-}
-
-.quantity-input {
-  width: 80px;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn-primary {
-  background: #2196F3;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 5px;
-  transition: background 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: #0b7dda;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  h2 {
-    font-size: 24px;
-  }
-
-  .product-image {
-    max-width: 300px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .product-info {
-    margin-top: 20px;
-  }
-
-  .table td {
-    font-size: 14px;
-  }
-
-  .quantity-input {
-    width: 60px;
-  }
-
-  .btn-primary {
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-
-@media (max-width: 576px) {
-  h2 {
-    font-size: 20px;
-  }
-
-  .product-image {
-    max-width: 250px;
-  }
-
-  .table td {
-    font-size: 12px;
-    padding: 8px;
-  }
-}
 /*sign up*/
 .signup-container {
   padding: 40px 0;
@@ -1068,7 +653,6 @@ h2::after {
 
 .btn {
   padding: 10px 20px;
-  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -1076,18 +660,12 @@ h2::after {
   cursor: pointer;
 }
 
-.btn-primary:hover {
-  background-color: #45a049;
-}
 
 input[type="submit"] {
   width: 100%;
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
-  background-color: #45a049;
-}
 
 .nav-item {
   position: relative;

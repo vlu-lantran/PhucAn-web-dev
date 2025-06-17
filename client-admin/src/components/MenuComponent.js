@@ -171,6 +171,11 @@ class Menu extends Component {
                     <i className="fas fa-box"></i> Contact
                   </Link>
                 </li>
+                <li className="submenu-item">
+                  <Link to="/admin/sliders">
+                    <i className="fas fa-box"></i> Slider
+                  </Link>
+                </li>
               </ul>
             )}
             

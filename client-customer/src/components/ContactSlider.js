@@ -93,42 +93,46 @@ class ContactComponent extends Component {
     this.pauseAndResumeAutoScroll();
   };
 
-  render() {
-    const { contactList, error } = this.state;
+ render() {
+  const { contactList, error, loading } = this.state;
 
-    if (error) {
-      return <div className="error-message">{error}</div>;
-    }
-
-    return (
-      <div className="contact-container">
-        <button className="arrow-btn left" onClick={this.scrollPrev}>
-          <FaArrowLeft />
-        </button>
-
-        <div className="contact-list" ref={this.contactListRef}>
-          {contactList.map((contact, index) => (
-            <div key={index} className="contact-card">
-              {contact.image ? (
-                <img
-                  src={contact.image}
-                  alt="contact"
-                  className="contact-logo"
-                  loading="lazy"
-                />
-              ) : (
-                <span>Không có hình ảnh</span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <button className="arrow-btn right" onClick={this.scrollNext}>
-          <FaArrowRight />
-        </button>
-      </div>
-    );
+  if (loading) {
+    return <div className="text-center" style={{ color: 'black' }}>Loading...</div>;
   }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  return (
+    <div className="contact-container">
+      <button className="arrow-btn left" onClick={this.scrollPrev}>
+        <FaArrowLeft />
+      </button>
+
+      <div className="contact-list" ref={this.contactListRef}>
+        {contactList.map((contact, index) => (
+          <div key={index} className="contact-card">
+            {contact.image ? (
+              <img
+                src={contact.image}
+                alt="contact"
+                className="contact-logo"
+                loading="lazy"
+              />
+            ) : (
+              <span>Không có hình ảnh</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <button className="arrow-btn right" onClick={this.scrollNext}>
+        <FaArrowRight />
+      </button>
+    </div>
+  );
+}
 }
 
 export default ContactComponent;

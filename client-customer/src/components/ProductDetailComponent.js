@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'; // React Router v6 hooks
+import MyContext from '../contexts/MyContext';
 import '../App.css'; // Import CSS tùy chỉnh
+import '../css/ProductDetail.css'; // Import CSS cho chi tiết sản phẩm
 
 // Create a wrapper component to use hooks with class component
 const withRouterParams = (WrappedComponent) => {
@@ -13,6 +15,7 @@ const withRouterParams = (WrappedComponent) => {
 };
 
 class ProductDetail extends Component {
+  static contextType = MyContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +27,23 @@ class ProductDetail extends Component {
     const productId = this.props.params.id; // Lấy ID từ props
     this.apiGetProductById(productId);
   }
+
+  handleAddToCart = () => {
+  const { product } = this.state;
+  if (!product) return;
+
+  const mycart = [...this.context.mycart];
+  const index = mycart.findIndex(item => item.product._id === product._id);
+
+  if (index === -1) {
+    mycart.push({ product: product, quantity: 1 });
+  } else {
+    mycart[index].quantity += 1;
+  }
+
+  this.context.setMycart(mycart);
+  alert('Đã thêm sản phẩm vào giỏ hàng!');
+};
 
   // API: Lấy thông tin sản phẩm theo ID
   apiGetProductById(id) {
@@ -84,12 +104,20 @@ class ProductDetail extends Component {
             </div>
           </div>
         </div>
+        {/* Nút Thêm vào giỏ hàng */}
+        <div className="mt-3">
+          <button onClick={this.handleAddToCart} className="btn btn-success">
+            <i className="fas fa-cart-plus"></i> Add to Cart
+          </button>
+        </div>
 
         {/* Phần chi tiết sản phẩm */}
-        <div className="product-detail-section mt-4">
-          <h5>Product Detail:</h5>
-          <p>{product.detail || 'Không có chi tiết sản phẩm.'}</p>
-        </div>
+        <div
+          className="product-detail-section mt-4"
+          dangerouslySetInnerHTML={{
+            __html: product.detail || '<p>Không có chi tiết sản phẩm.</p>',
+          }}
+        ></div>
       </div>
     );
   }

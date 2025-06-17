@@ -17,6 +17,37 @@ def convert_objectid_to_str(doc):
             doc[i] = convert_objectid_to_str(doc[i])
     return doc
 
+
+# ==== SLIDER ROUTES ====
+@customer_bp.route('/sliders', methods=['GET'])
+def get_sliders():
+    from Models.ClientDAO import SilderDAO
+    try:
+        sliders = SilderDAO.select_all()
+        result = [{'src': slider['image'], 'link': slider['link']} for slider in sliders]
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# ==== CONTACT AND BRAND ROUTES ====  
+@customer_bp.route('/contacts', methods=['GET'])
+def get_all_contacts():
+    from Models.ClientDAO import ContactDAO
+    try:
+        contacts = ContactDAO.select_all()
+        return jsonify(contacts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@customer_bp.route('/brands', methods=['GET'])
+def get_all_brands():
+    from Models.ClientDAO import BrandDAO
+    try:
+        brands = BrandDAO.select_all()
+        return jsonify(brands), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # ==== CATEGORY ROUTES ====
 
 @customer_bp.route('/categories', methods=['GET'])
@@ -160,25 +191,9 @@ def get_brand_by_id(id):
     except Exception as e:
         print(f"Error occurred: {e}")
         return jsonify({'error': str(e)}), 400
-    
-@customer_bp.route('/contacts', methods=['GET'])
-def get_all_contacts():
-    from Models.ClientDAO import ContactDAO
-    try:
-        contacts = ContactDAO.select_all()
-        return jsonify(contacts), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
-@customer_bp.route('/brands', methods=['GET'])
-def get_all_brands():
-    from Models.ClientDAO import BrandDAO
-    try:
-        brands = BrandDAO.select_all()
-        return jsonify(brands), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    
+
+# ==== NEWS ROUTES ==== 
 @customer_bp.route('/news', methods=['GET'])
 def get_all_news():
     from Models.NewsDAO import NewsDAO
@@ -224,3 +239,4 @@ def get_news_by_id(id):
     except Exception as e:
         print(f"Error in get_news_by_id: {e}")
         return jsonify({'error': str(e)}), 400
+

@@ -6,6 +6,7 @@ import '../css/Category.css';
 const CategoryComponent = () => {
   const [categories, setCategories] = useState([]);
   const [visibleIndexes, setVisibleIndexes] = useState([]);
+  const [loading, setLoading] = useState(true); // state loading
 
   useEffect(() => {
     fetchCategories();
@@ -23,8 +24,22 @@ const CategoryComponent = () => {
       });
     } catch (error) {
       console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false); // tắt loading dù thành công hay lỗi
     }
   };
+
+  if (loading) {
+    return (
+      <div className="category-section">
+        <div className="container">
+          <h2 className="section-title text-center">Category</h2>
+          <p className="text-center" style={{ color: "black" }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="category-section">
       <div className="container">

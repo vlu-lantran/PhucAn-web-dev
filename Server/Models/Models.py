@@ -156,3 +156,15 @@ class Contact(Document):
         'ordering': ['name'],
         'strict': False
     }
+
+class Slider(Document):
+    _id = ObjectIdField(primary_key=True)
+    name = StringField(required=True, max_length=100)
+    image = StringField()  # URL hoặc base64 của hình ảnh
+    link = StringField()  # Liên kết đến trang đích khi nhấp vào slider
+
+    meta = {
+        'collection': 'sliders',
+        'ordering': ['name'],
+        'strict': False
+    }
