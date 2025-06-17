@@ -1,4 +1,4 @@
-# 🛍️ Phuc An Website – Docker Compose Setup
+# Phuc An Website – Docker Compose Setup
 
 Dự án bao gồm 3 phần chính:
 
