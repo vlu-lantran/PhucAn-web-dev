@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir flask flask-cors
+RUN pip install --no-cache-dir flask flask-cors bson
 
-EXPOSE 5000
+EXPOSE 3000
 
 CMD ["python", "app.py"]
