@@ -59,8 +59,7 @@ docker-compose up -d
 | Admin Website    | [http://localhost:3001](http://localhost:3001) |
 
 ## Triển khai production thực tế
-### Hướng dẫn chọn API UR
-theo từng môi trường
+### Hướng dẫn chọn API URL theo từng môi trường
 
 | Trường hợp                       | Biến cần dùng                                   |
 | -------------------------------- | ----------------------------------------------- |
