@@ -1,0 +1,342 @@
+.menu-container {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background: linear-gradient(180deg, #e9f0fa 0%, #d5e1f5 100%);
+  color: #4a4a4a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.08);
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  transition: width 0.3s ease;
+}
+
+.user-info {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info .avatar {
+  width: 40px;
+  height: 40px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-info .avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.user-info .user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info .username {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+  flex: 1;
+}
+
+.menu-item {
+  margin: 5px 0;
+}
+
+.menu-item a,
+.category-toggle span,
+.news-toggle span,
+.product-toggle span {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  font-size: 15px;
+  color: #6c757d;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-item a:hover,
+.category-toggle span:hover,
+.product-toggle span:hover {
+  background: #c9dfff;
+  color: #0056b3;
+  transform: translateX(5px);
+
+}
+
+.menu-item a.active {
+  background: #c9dfff;
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.menu-item a i {
+  font-size: 18px;
+  margin-right: 10px;
+  color: #6c757d;
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.arrow {
+  position: absolute;
+  right: 15px;
+  font-size: 12px;
+  color: #0056b3;
+  transition: transform 0.3s ease;
+}
+
+.category-toggle:hover .arrow,
+.news-toggle:hover .arrow,
+.product-toggle:hover .arrow {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 20px;
+  background: #f8faff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submenu-item a {
+  display: block;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #4a4a4a;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+}
+
+.submenu-item a:hover {
+  background: #e0eaff;
+  color: #0056b3;
+  padding-left: 20px;
+}
+
+.submenu-item a.active {
+  background: #c9dfff;
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.logout-container {
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: linear-gradient(145deg, #e6f0fa, #d9e7ff);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.logout-container::before,
+.logout-container::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+}
+
+.logout-container::before {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: -30px;
+}
+
+.logout-container::after {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  right: -40px;
+}
+
+.logout-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 25px;
+  background: linear-gradient(145deg, #007bff, #0056b3);
+  color: #ffffff;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logout-link:hover {
+  background: linear-gradient(145deg, #0056b3, #003f87);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.logout-link i {
+  margin-right: 8px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.logout-link:hover i {
+  color: #ffffff;
+}
+
+/* Responsive: Tablet */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .menu-item a,
+  .category-toggle span,
+  .news-toggle span,
+  .product-toggle span {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .submenu-item a {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .user-info .avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .user-info .username {
+    font-size: 15px;
+  }
+
+  .logout-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 15px;
+  }
+
+  .logout-link {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 576px) {
+  .sidebar {
+    width: 70px;
+    padding: 10px;
+  }
+
+  .menu-item a,
+  .category-toggle span,
+  .news-toggle span,
+  .product-toggle span {
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .menu-item a span,
+  .category-toggle span span,
+  .news-toggle span span,
+  .product-toggle span span {
+    display: none;
+  }
+
+  .menu-item a i,
+  .category-toggle .icon,
+  .news-toggle .icon,
+  .product-toggle .icon {
+    font-size: 20px;
+    margin-right: 0;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .submenu {
+    display: none;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .logout-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .logout-link {
+    padding: 12px;
+    justify-content: center;
+  }
+
+  .logout-link span {
+    display: none;
+  }
+}
+.menu-item a i,
+.category-toggle span i,
+.news-toggle span i,
+.product-toggle span i,
+.submenu-item a i {
+  margin-right: 10px; /* khoảng cách giữa icon và chữ */
+  font-size: 16px;
+  width: 20px; /* đảm bảo icon đều nhau */
+  text-align: center;
+}
