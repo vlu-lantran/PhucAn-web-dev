@@ -23,22 +23,6 @@ cd vlu-lantran/PhucAn-wen-dev
 - Hệ điều hành Windows, macOS hoặc Linux đều hỗ trợ
 
 ### 2. Các bước thực hiện
-#### Cấu trúc Hệ Thống Của Dự án
-.
-├── docker-compose.yml
-├── Server/                (Flask Backend)
-│   ├── app.py
-│   ├── Models/
-│   └── Dockerfile
-├── client-customer/       (React Customer Frontend)
-│   ├── src/
-│   ├── public/
-│   └── Dockerfile
-├── client-admin/          (React Admin Frontend)
-│   ├── src/
-│   ├── public/
-│   └── Dockerfile
-
 1. **Mở Terminal / CMD / PowerShell** tại thư mục gốc của dự án
 2. **Chạy lệnh sau để khởi động toàn bộ hệ thống**
 
