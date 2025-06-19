@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <MyProvider>
         <Login/>
-        <BrowserRouter >
+        <BrowserRouter basename="/admin/home">
           <Main />
         </BrowserRouter>
       </MyProvider>
