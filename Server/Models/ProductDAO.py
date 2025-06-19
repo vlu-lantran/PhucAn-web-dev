@@ -141,6 +141,9 @@ class ProductDAO:
     @staticmethod
     def select_top_new(top):
         db = get_db()
+        if db is None:
+            print("❌ Không thể truy vấn sản phẩm do db = None")
+            return []  # hoặc raise custom exception
         products = list(db.products.find().sort("cdate", -1).limit(top))  # Sắp xếp theo cdate giảm dần
         return convert_objectid_to_str(products)  # Chuyển ObjectId thành chuỗi
 

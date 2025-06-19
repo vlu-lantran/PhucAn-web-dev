@@ -1,8 +1,9 @@
-version: '3.8'
+version: '1.0.0'
 
 services:
   backend:
     container_name: backend
+    image: minhquan1607/backend:v1.0.0
     build:
       context: ./Server
       dockerfile: Dockerfile
@@ -13,9 +14,12 @@ services:
       - ./Server:/app
     networks:
       - app-network
+    env_file:
+      - ./Server/.env
 
   client-admin:
     container_name: client-admin
+    image: minhquan1607/client-admin:v1.0.0
     build:
       context: ./client-admin
     ports:
@@ -27,6 +31,7 @@ services:
 
   client-customer:
     container_name: client-customer
+    image: minhquan1607/client-customer:v1.0.0
     build:
       context: ./client-customer
     ports:
@@ -38,3 +43,4 @@ services:
 
 networks:
   app-network:
+
