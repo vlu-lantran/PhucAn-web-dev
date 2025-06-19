@@ -1,0 +1,133 @@
+/*menu*/
+.navbar {
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333 !important;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #2196F3 !important;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center;
+}
+
+.form-control {
+  border-radius: 20px 0 0 20px;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  font-size: 14px;
+  width: 200px;
+  background: #f8f9fa;
+}
+
+.form-control:focus {
+  border-color: #2196F3;
+  box-shadow: none;
+}
+
+.btn-search {
+  border-radius: 0 20px 20px 0;
+  background: #2196F3;
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.btn-search:hover {
+  background: #0b7dda;
+}
+
+.btn-search i {
+  margin-right: 5px;
+}
+
+/* Ẩn menu collapse khi không active */
+.collapse {
+  display: none;
+}
+
+.collapse.show {
+  display: block;
+}
+
+/* Dropdown menu trên mobile */
+@media (max-width: 991px) {
+  .dropdown-menu {
+    position: static !important;
+    float: none;
+    width: 100%;
+    box-shadow: none;
+    background-color: transparent;
+    padding-left: 15px;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+  .mycart-link {
+    display: block; /* để nó thành khối */
+    margin: 10px auto; /* tự động margin trái phải để căn giữa */
+    text-align: center; /* căn nội dung bên trong */
+  }
+}
+
+/* Con trỏ chuột cho dropdown toggle */
+.nav-link.dropdown-toggle {
+  cursor: pointer;
+}
+
+/* Sửa margin cho form-control trên mobile */
+@media (max-width: 576px) {
+  .form-control {
+    width: 60%;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .btn-search {
+    width: 35%;
+    font-size: 12px;
+  }
+}
+
+/* Nút hamburger */
+.navbar-toggler {
+  border: none;
+  background: transparent;
+  background-color: #f9f9f9 !important;
+  outline: none; /* tắt viền xanh mặc định trên Chrome */
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: #f9f9f9 !important;
+}
+
+.navbar-toggler:active {
+  background-color: #f9f9f9 !important;
+  outline: none; /* tắt viền xanh mặc định trên Chrome */
+  box-shadow: none; /* tắt shadow nếu có */
+}
