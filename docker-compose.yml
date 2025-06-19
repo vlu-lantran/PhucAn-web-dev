@@ -1,4 +1,4 @@
-version: '1.0.0'
+version: "3.9"
 
 services:
   backend:
@@ -17,23 +17,13 @@ services:
     env_file:
       - ./Server/.env
 
-  client-admin:
-    container_name: client-admin
-    image: minhquan1607/client-admin:v1.0.0
-    build:
-      context: ./client-admin
-    ports:
-      - "3001:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
   client-customer:
     container_name: client-customer
     image: minhquan1607/client-customer:v1.0.0
     build:
       context: ./client-customer
+      args:
+        REACT_APP_API_URL: http://backend:3000
     ports:
       - "3002:80"
     depends_on:
@@ -41,6 +31,20 @@ services:
     networks:
       - app-network
 
+  client-admin:
+    container_name: client-admin
+    image: minhquan1607/client-admin:v1.0.0
+    build:
+      context: ./client-admin
+      args:
+        REACT_APP_API_URL: http://backend:3000
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
 networks:
   app-network:
-
+    driver: bridge
