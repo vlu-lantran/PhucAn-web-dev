@@ -52,11 +52,11 @@ docker-compose up -d
 
 ### 5. Truy cập vào website
 
-| Dịch vụ          | Địa chỉ truy cập                               |
-| ---------------- | ---------------------------------------------- |
-| Backend API      | [http://localhost:3000](http://localhost:3000) |
-| Customer Website | [http://localhost:3002](http://localhost:3002) |
-| Admin Website    | [http://localhost:3001](http://localhost:3001) |
+| Dịch vụ          | Địa chỉ truy cập                                          |
+| ---------------- | ----------------------------------------------------------|
+| Backend API      | [http://localhost:3000]                                   |
+| Customer Website | [http://localhost:3002]                                   |
+| Admin Website    | [http://localhost:3001/admin/home]                        |
 
 ## Triển khai production thực tế
 
