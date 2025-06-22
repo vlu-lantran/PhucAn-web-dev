@@ -23,8 +23,6 @@ cd vlu-lantran/PhucAn-wen-dev
 - Hệ điều hành Windows, macOS hoặc Linux đều hỗ trợ
 
 ### 2. Các bước thực hiện
-
->>>>>>> d4c62ab (WIP: Đang dở việc trước khi pull)
 1. **Mở Terminal / CMD / PowerShell** tại thư mục gốc của dự án
 2. **Chạy lệnh sau để khởi động toàn bộ hệ thống**
 
