@@ -24,8 +24,7 @@ class ContactDetailComponent extends Component {
   loadContact = async () => {
     const { id } = this.props.params;
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/contacts/${id}`);
+      const response = await axios.get(`/api/admin/contacts/${id}`);
       const contact = response.data;
       this.setState({
         name: contact.name,
@@ -66,10 +65,9 @@ class ContactDetailComponent extends Component {
     try {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.put(`${API}/api/admin/contacts/${id}`, contactData);
+        await axios.put(`/api/admin/contacts/${id}`, contactData);
       } else {
-        await axios.post(`${API}/api/admin/contacts`, contactData);
+        await axios.post('/api/admin/contacts', contactData);
       }
 
       this.setState({ success: true, error: null });

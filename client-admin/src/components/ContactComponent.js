@@ -16,8 +16,7 @@ class ContactComponent extends Component {
 
   fetchContacts = async () => {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/contacts`);
+      const response = await axios.get('/api/admin/contacts');
       this.setState({
         contactList: response.data,
         loading: false,

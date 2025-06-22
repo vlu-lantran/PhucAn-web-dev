@@ -24,10 +24,17 @@ class Main extends Component {
 
   render() {
     if (this.context.token !== '') {
+      // Nếu đang ở trang gốc "/" thì redirect sang "/admin/home"
+      if (window.location.pathname === '/admin/home' || window.location.pathname === '/admin/home/') {
+        // không làm gì
+      } else {
+        return <Navigate to="/admin/home" replace />;
+      }
       return (
         <div className="body-admin">
           <Menu />
           <Routes>
+            <Route path="*" element={<Navigate to="/admin/home" />} />
             <Route path="/" element={<Navigate replace to="/admin/home" />} />
             <Route path="/admin/home" element={<Home />} />
             <Route path="/admin/category" element={<Category />} />

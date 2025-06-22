@@ -1,16 +1,22 @@
-# Dockerfile
-
+# --- Giai đoạn build ---
 FROM node:18 AS builder
 WORKDIR /app
-COPY package*.json ./
+
+# Chỉ copy client-admin
+COPY client-admin ./client-admin
+WORKDIR /app/client-admin
+
+# Cài đặt và build
 RUN npm install
-COPY . .
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ARG REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
 RUN npm run build
 
+# --- Giai đoạn production ---
 FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy build React admin vào đúng thư mục cho route /admin/home
+COPY --from=builder /app/client-admin/build /usr/share/nginx/html/admin/home
+COPY ../nginx/default.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

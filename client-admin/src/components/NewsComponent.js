@@ -33,8 +33,7 @@ class News extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa tin tức này?');
     if (confirmDelete) {
       try {
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.delete(`${API}/api/admin/news/${id}`);
+        await axios.delete(`/api/admin/news/${id}`);
         this.fetchNews();
       } catch (error) {
         alert('Xóa thất bại.');

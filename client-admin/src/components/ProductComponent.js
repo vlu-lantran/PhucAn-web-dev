@@ -143,9 +143,8 @@ class Product extends Component {
   };
 
   apiGetCategories() {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     axios
-      .get(`${API}/api/admin/categories`)
+      .get(`/api/admin/categories`)
       .then((res) => {
         if (res.data && Array.isArray(res.data) && res.data.length > 0) {
           this.context.setCategories(res.data);
@@ -178,9 +177,8 @@ class Product extends Component {
   if (!confirmDelete) {
     return; // Hủy xóa nếu người dùng chọn Cancel
   }
-  const API = process.env.REACT_APP_API_BASE_URL || '';
   axios
-    .delete(`${API}/api/admin/products/${id}`)
+    .delete(`/api/admin/products/${id}`)
     .then((res) => {
       if (res.status === 200) {
         // Cập nhật lại danh sách sản phẩm
@@ -199,9 +197,8 @@ class Product extends Component {
 
   confirmDelete = () => {
     const { confirmDeleteId } = this.state;
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     axios
-      .delete(`${API}/api/admin/products/${confirmDeleteId}`)
+      .delete(`/api/admin/products/${confirmDeleteId}`)
       .then((res) => {
         if (res.data) {
           this.apiGetProducts(this.state.curPage);
@@ -237,9 +234,8 @@ class Product extends Component {
     console.error("Invalid page value:", page);
     return; // Dừng lại nếu page không hợp lệ
   }
-  const API = process.env.REACT_APP_API_BASE_URL || '';
   axios
-    .get(`${API}/api/admin/products?page=${page}`)
+    .get(`/api/admin/products?page=${page}`)
     .then((res) => {
       const result = res.data;
       console.log("API result:", res.data);

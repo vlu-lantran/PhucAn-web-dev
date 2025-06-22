@@ -67,8 +67,7 @@ class ProductDetail extends Component {
     const { id } = this.props.params;
     console.log('Loading product ID:', id); // Debug
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/products/${id}`);
+      const response = await axios.get(`/api/admin/products/${id}`);
       const product = response.data;
       console.log('Product data:', product); // Debug
       this.setState({
@@ -151,9 +150,8 @@ class ProductDetail extends Component {
   };
 
   apiGetCategories() {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     axios
-      .get(`${API}/api/admin/categories`)
+      .get(`/api/admin/categories`)
       .then((res) => {
         this.setState({ categories: res.data });
       })
@@ -215,9 +213,8 @@ class ProductDetail extends Component {
   };
 
   apiPostProduct(prod) {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     axios
-      .post(`${API}/api/admin/products`, prod)
+      .post(`/api/admin/products`, prod)
       .then((res) => {
         this.setState({
           successMessage: 'Thêm sản phẩm thành công!',
@@ -240,10 +237,9 @@ class ProductDetail extends Component {
   }
 
   apiPutProduct(id, prod) {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     console.log('apiPutProduct - ID:', id, 'Product:', prod); // Debug
     axios
-      .put(`${API}/api/admin/products/${id}`, prod)
+      .put(`/api/admin/products/${id}`, prod)
       .then((res) => {
         this.setState({ successMessage: 'Cập nhật thành công!', errorMessage: '' });
         setTimeout(() => this.setState({ successMessage: '' }), 2000);

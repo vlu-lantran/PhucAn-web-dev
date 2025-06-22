@@ -34,8 +34,7 @@ class SliderComponent extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa thương hiệu này?');
     if (confirmDelete) {
       try {
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.delete(`${API}/api/admin/sliders/${id}`);
+        await axios.delete(`/api/admin/sliders/${id}`);
         this.fetchSliders();
       } catch (error) {
         alert('Xóa thất bại.');

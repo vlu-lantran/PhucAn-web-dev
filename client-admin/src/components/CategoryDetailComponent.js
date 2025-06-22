@@ -39,8 +39,7 @@ class CategoryDetailComponent extends Component {
   loadCategory = async () => {
     const { id } = this.props.params;
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/categories/${id}`);
+      const response = await axios.get(`/api/admin/categories/${id}`);
       const category = response.data;
       this.setState({
         name: category.name,
@@ -76,10 +75,9 @@ class CategoryDetailComponent extends Component {
     try {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.put(`${API}/api/admin/categories/${id}`, categoryData);
+        await axios.put(`/api/admin/categories/${id}`, categoryData);
       } else {
-        await axios.post(`${API}/api/admin/categories`, categoryData);
+        await axios.post('/api/admin/categories', categoryData);
       }
 
       this.setState({ success: true, error: null });

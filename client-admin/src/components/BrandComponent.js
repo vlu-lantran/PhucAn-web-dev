@@ -16,8 +16,7 @@ class BrandComponent extends Component {
 
   fetchBrands = async () => {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/brands`);
+      const response = await axios.get(`/api/admin/brands`);
       this.setState({
         brandList: response.data,
         loading: false,

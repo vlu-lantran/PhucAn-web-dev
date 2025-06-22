@@ -78,10 +78,10 @@ class BrandDetailComponent extends Component {
     try {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.put(`${API}/api/admin/brands/${id}`, brandData);
+        
+        await axios.put(`/api/admin/brands/${id}`, brandData);
       } else {
-        await axios.post(`${API}/api/admin/brands`, brandData);
+        await axios.post(`/api/admin/brands`, brandData);
       }
 
       this.setState({ success: true, error: null });

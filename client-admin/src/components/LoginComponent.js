@@ -72,8 +72,7 @@ class Login extends Component {
 
   apiLogin = async (account) => {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const res = await axios.post(`${API}/api/admin/login`, account, {
+      const res = await axios.post('/api/admin/login', account, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -81,11 +80,12 @@ class Login extends Component {
       const result = res.data;
 
       if (result.success) {
-        this.context.setToken(result.token);
-        this.context.setUsername(account.username);
-        this.setState({ errorMessage: '', isLoading: false }); 
-        this.props.navigate('/admin/home'); // Reset loading khi thành công
-      } else {
+      this.context.setToken(result.token);
+      this.context.setUsername(account.username);
+      this.setState({ errorMessage: '', isLoading: false });
+      this.props.onLoginSuccess(); // ✅ Gọi callback để App.jsx điều khiển chuyển trang
+      }
+      else {
         this.setState({ errorMessage: result.message, isLoading: false });
       }
     } catch (error) {

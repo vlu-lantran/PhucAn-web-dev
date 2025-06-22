@@ -42,8 +42,7 @@ class NewsDetailComponent extends Component {
   loadNews = async () => {
     const { id } = this.props.params;
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/news/${id}`);
+      const response = await axios.get(`/api/admin/news/${id}`);
       const news = response.data;
       this.setState({
         title: news.title,

@@ -20,8 +20,7 @@ class CategoryComponent extends Component {
   fetchCategories = async () => {
     try {
       const config = { headers: { 'x-access-token': this.context.token } };
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/categories`, config);
+      const response = await axios.get(`/api/admin/categories`, config);
       this.setState({ categories: response.data, loading: false });
     } catch (error) {
       this.setState({ error: 'Không thể tải danh mục.', loading: false });
@@ -32,8 +31,7 @@ class CategoryComponent extends Component {
     if (window.confirm('Bạn có chắc muốn xóa danh mục này?')) {
       try {
         const config = { headers: { 'x-access-token': this.context.token } };
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.delete(`${API}/api/admin/categories/${id}`, config);
+        await axios.delete(`/api/admin/categories/${id}`, config);
         this.fetchCategories();
       } catch (error) {
         alert('Xóa thất bại.');

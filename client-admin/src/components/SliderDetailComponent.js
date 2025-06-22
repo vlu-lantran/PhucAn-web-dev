@@ -39,8 +39,7 @@ class SliderDetailComponent extends Component {
   loadSlider = async () => {
     const { id } = this.props.params;
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/sliders/${id}`);
+      const response = await axios.get(`/api/admin/sliders/${id}`);
       const slider = response.data;
       this.setState({
         name: slider.name,
