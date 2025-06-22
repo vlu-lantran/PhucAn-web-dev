@@ -184,9 +184,8 @@ class Menu extends Component {
   }
 
   apiGetCategories() {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
     axios
-      .get(`${API}/api/customer/categories`)
+      .get('/api/customer/categories')
       .then((res) => {
         this.setState({ categories: res.data });
       })

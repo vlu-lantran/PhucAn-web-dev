@@ -71,16 +71,14 @@ class Product extends Component {
 
   // apis
   apiGetProductsByCatID(cid) {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
-    axios.get(`${API}/api/customer/products/category/` + cid).then((res) => {
+    axios.get('/api/customer/products/category/' + cid).then((res) => {
       const result = res.data;
       this.setState({ products: result });
     });
   }
 
   apiGetProductsByKeyword(keyword) {
-    const API = process.env.REACT_APP_API_BASE_URL || '';
-    axios.get(`${API}/api/customer/products/search/` + keyword).then((res) => {
+    axios.get('/api/customer/products/search/' + keyword).then((res) => {
       const result = res.data;
       this.setState({ products: result });
     });

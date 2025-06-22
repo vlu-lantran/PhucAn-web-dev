@@ -11,8 +11,7 @@ export const ImageSlider = () => {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        const response = await axios.get(`${API}/api/customer/sliders`);
+        const response = await axios.get('/api/customer/sliders');
         console.log('Slides:', response.data);
         setSlides(response.data);
       } catch (error) {

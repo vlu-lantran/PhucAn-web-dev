@@ -14,8 +14,7 @@ const CategoryComponent = () => {
 
   const fetchCategories = async () => {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const res = await axios.get(`${API}/api/customer/categories`);
+      const res = await axios.get('/api/customer/categories');
       setCategories(res.data);
 
       res.data.forEach((_, index) => {
