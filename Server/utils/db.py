@@ -2,8 +2,6 @@ from pymongo import MongoClient, errors
 from mongoengine import connect
 from motor.motor_asyncio import AsyncIOMotorClient
 from .my_constants import MyConstants
-from dotenv import load_dotenv
-load_dotenv()
 
 
 # --------------------------

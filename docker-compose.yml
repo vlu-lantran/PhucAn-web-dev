@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     container_name: backend
@@ -19,11 +17,12 @@ services:
 
   client-customer:
     container_name: client-customer
-    image: minhquan1607/client-customer:v1.0.0
+    image: minhquan1607/client-customer:v1.0.1
     build:
-      context: ./client-customer
+      context: .
+      dockerfile: client-customer/Dockerfile
       args:
-        REACT_APP_API_URL: http://backend:3000
+        REACT_APP_API_BASE_URL: http://backend:3000
     ports:
       - "3002:80"
     depends_on:
@@ -33,11 +32,12 @@ services:
 
   client-admin:
     container_name: client-admin
-    image: minhquan1607/client-admin:v1.0.0
+    image: minhquan1607/client-admin:v1.0.1
     build:
-      context: ./client-admin
+      context: .
+      dockerfile: client-admin/Dockerfile
       args:
-        REACT_APP_API_URL: http://backend:3000
+        REACT_APP_API_BASE_URL: http://backend:3000
     ports:
       - "3001:80"
     depends_on:
