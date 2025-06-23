@@ -40,7 +40,7 @@ class BrandDetailComponent extends Component {
   loadBrand = async () => {
     const { id } = this.props.params;
     try {
-      const response = await axios.get(`/api/admin/brands/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/brands/${id}`);
       const brand = response.data;
       this.setState({
         name: brand.name,
@@ -79,9 +79,9 @@ class BrandDetailComponent extends Component {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
         
-        await axios.put(`/api/admin/brands/${id}`, brandData);
+        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/admin/brands/${id}`, brandData);
       } else {
-        await axios.post(`/api/admin/brands`, brandData);
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/brands`, brandData);
       }
 
       this.setState({ success: true, error: null });

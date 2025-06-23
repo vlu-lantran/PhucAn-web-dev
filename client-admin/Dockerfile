@@ -14,9 +14,18 @@ RUN npm run build
 
 # --- Giai đoạn production ---
 FROM nginx:alpine
+
 # Copy build React admin vào đúng thư mục cho route /admin/home
 COPY --from=builder /app/client-admin/build /usr/share/nginx/html/admin/home
-COPY ../nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Copy file template và script thay biến môi trường
+COPY ../nginx/default.conf.template /etc/nginx/templates/default.conf.template
+COPY ../nginx/docker-entrypoint.sh /docker-entrypoint.sh
+
+# Cấp quyền thực thi cho script
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Entrypoint để thay biến env và chạy nginx
+CMD ["/docker-entrypoint.sh"]

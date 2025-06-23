@@ -19,8 +19,7 @@ class Home extends Component {
 
   async apiGetContact() {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const res = await axios.get(`${API}/api/customer/contacts`);
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/contacts`);
       this.setState({ contacts: res.data });
     } catch (error) {
       console.error('Error fetching contacts:', error);

@@ -61,7 +61,7 @@ docker-compose up -d
 ## Triển khai production thực tế
 
 ### Hướng dẫn chọn API URL theo từng môi trường
-
+#### Truy cập vào file .env cùng cấp với docker-compose.yml
 
 | Trường hợp                       | Biến cần dùng                                   |
 | -------------------------------- | ----------------------------------------------- |
@@ -82,9 +82,7 @@ REACT_APP_API_BASE_URL=https://api.yourdomain.com
 ```
 Sau khi chỉnh sửa .env, hãy build lại frontend:
 ```bash
-# Trong thư mục client-customer
-docker-compose build client-customer
-
-
-
-
+docker compose down --volumes --remove-orphans
+docker compose build --no-cache
+docker compose up
+```

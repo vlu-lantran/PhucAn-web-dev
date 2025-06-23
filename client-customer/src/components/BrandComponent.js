@@ -8,7 +8,7 @@ const BrandComponent = () => {
   const navigate = useNavigate(); // 👈 Dùng hook navigate
 
   useEffect(() => {
-  axios.get('/api/customer/brands')
+  axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/brands`)
     .then(res => {
       setBrands(res.data);
 

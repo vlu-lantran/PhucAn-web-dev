@@ -10,7 +10,7 @@ load_dotenv()  # Load biến môi trường từ file .env nếu có
 app = Flask(__name__)
 
 # Cấu hình CORS
-CORS(app, resources={r"/*": {"origins": os.getenv("ALLOWED_ORIGINS", "*")}})
+CORS(app)
 
 # Cấu hình payload tối đa
 app.config['MAX_CONTENT_LENGTH'] = int(os.getenv("MAX_CONTENT_LENGTH", 10)) * 1024 * 1024  # default 10MB

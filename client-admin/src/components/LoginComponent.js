@@ -72,7 +72,7 @@ class Login extends Component {
 
   apiLogin = async (account) => {
     try {
-      const res = await axios.post('/api/admin/login', account, {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/login`, account, {
         headers: {
           'Content-Type': 'application/json',
         },

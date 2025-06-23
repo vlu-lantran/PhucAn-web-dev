@@ -20,7 +20,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter basename="/admin/home">
+      <BrowserRouter basename="/admin">
         <MyProvider>
           {!this.state.isLoggedIn ? (
             <Login onLoginSuccess={this.handleLoginSuccess} />

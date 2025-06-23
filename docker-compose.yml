@@ -1,7 +1,7 @@
 services:
   backend:
     container_name: backend
-    image: minhquan1607/backend:v1.0.0
+    image: minhquan1607/backend:v1.0.1
     build:
       context: ./Server
       dockerfile: Dockerfile
@@ -17,12 +17,14 @@ services:
 
   client-customer:
     container_name: client-customer
-    image: minhquan1607/client-customer:v1.0.1
+    image: minhquan1607/client-customer:v1.0.2
     build:
       context: .
       dockerfile: client-customer/Dockerfile
       args:
-        REACT_APP_API_BASE_URL: http://backend:3000
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+    environment:
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
     ports:
       - "3002:80"
     depends_on:
@@ -32,18 +34,35 @@ services:
 
   client-admin:
     container_name: client-admin
-    image: minhquan1607/client-admin:v1.0.1
+    image: minhquan1607/client-admin:v1.0.2
     build:
       context: .
       dockerfile: client-admin/Dockerfile
       args:
-        REACT_APP_API_BASE_URL: http://backend:3000
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+    environment:
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
     ports:
       - "3001:80"
     depends_on:
       - backend
     networks:
       - app-network
+  
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    environment:
+    - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
 
 networks:
   app-network:

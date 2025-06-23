@@ -30,6 +30,130 @@ class Product extends Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.context.token) {
+      console.warn("Token chưa có sẵn, không thể gọi API.");
+      return;
+    }
+    this.apiGetProducts(this.state.curPage);
+    if (Array.isArray(this.context.categories) && this.context.categories.length > 0) {
+      this.setState({ categoriesLoaded: true });
+    } else {
+      this.apiGetCategories();
+    }
+  }
+
+  trItemClick = (item) => {
+    this.setState({ itemSelected: item });
+  };
+
+  apiGetCategories() {
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/categories`, config)
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          this.context.setCategories(res.data);
+          this.setState({ categoriesLoaded: true, categoriesError: '' });
+        } else {
+          this.setState({ categoriesLoaded: true, categoriesError: 'No categories found.' });
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+        this.setState({
+          categoriesLoaded: true,
+          categoriesError: 'Failed to load categories. Please try again later.',
+        });
+      });
+  }
+
+  handleDelete = (id) => {
+    if (!id) {
+      alert("Product ID không hợp lệ.");
+      return;
+    }
+
+    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
+    if (!confirmDelete) return;
+
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios
+      .delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/products/${id}`, config)
+      .then((res) => {
+        if (res.status === 200) {
+          this.apiGetProducts(this.state.curPage);
+          alert("Xóa sản phẩm thành công!");
+        } else {
+          alert("Xóa sản phẩm thất bại.");
+        }
+      })
+      .catch((error) => {
+        console.error("Xóa thất bại:", error);
+        alert("Có thể sản phẩm đã bị xóa trước đó. Vui lòng refresh lại.");
+      });
+  };
+
+  confirmDelete = () => {
+    const { confirmDeleteId } = this.state;
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios
+      .delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/products/${confirmDeleteId}`, config)
+      .then((res) => {
+        this.apiGetProducts(this.state.curPage);
+        this.setState({
+          successMessage: 'Product deleted successfully!',
+          showConfirmDeleteModal: false,
+          confirmDeleteId: null,
+        });
+        setTimeout(() => {
+          this.setState({ successMessage: '' });
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+      });
+  };
+
+  cancelDelete = () => {
+    this.setState({ showConfirmDeleteModal: false, confirmDeleteId: null });
+  };
+
+  lnkPageClick = (page) => {
+    if (page !== this.state.curPage) {
+      this.apiGetProducts(page);
+    }
+  };
+
+  apiGetProducts(page) {
+    if (!this.context.token) {
+      console.warn("Không có token để gọi API.");
+      return;
+    }
+    if (!page || page <= 0) {
+      console.error("Giá trị page không hợp lệ:", page);
+      return;
+    }
+
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/products?page=${page}`, config)
+      .then((res) => {
+        const result = res.data;
+        const pageSize = result.pageSize || 10;
+        const totalItems = result.totalItems || 0;
+        const noPages = Math.ceil(totalItems / pageSize);
+        this.setState({
+          products: result.products || [],
+          curPage: result.page || 1,
+          noPages: noPages,
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+      });
+  }
+
   render() {
     const prods = this.state.products.map((item) => (
       <tr
@@ -41,15 +165,17 @@ class Product extends Component {
         <td>{item.name}</td>
         <td>{item.price.toLocaleString()}</td>
         <td>{new Date(item.cdate).toLocaleString()}</td>
-        <td>{item.category.name}</td>
+        <td>{item.category?.name}</td>
         <td>
-          <img
-            src={"data:image/jpg;base64," + item.image}
-            width="100px"
-            height="100px"
-            alt={item.name}
-            className="product-image"
-          />
+          {item.image && (
+            <img
+              src={`data:image/jpg;base64,${item.image}`}
+              width="100px"
+              height="100px"
+              alt={item.name}
+              className="product-image"
+            />
+          )}
         </td>
         <td>
           <Link to={`/admin/product/edit/${item._id}`}>
@@ -70,7 +196,7 @@ class Product extends Component {
         <span
           key={index}
           className={`pagination-item ${page === this.state.curPage ? 'active' : 'link'}`}
-          onClick={() => page !== this.state.curPage && this.lnkPageClick(page)}
+          onClick={() => this.lnkPageClick(page)}
         >
           {page}
         </span>
@@ -81,13 +207,10 @@ class Product extends Component {
       <div className="product-container">
         <div className="product-header">
           {this.state.successMessage && (
-            <div className="alert-success global-msg">
-              {this.state.successMessage}
-            </div>
+            <div className="alert-success global-msg">{this.state.successMessage}</div>
           )}
           <div className="breadcrumb">
-            <Link to="/admin/home"><span>Trang chủ</span></Link> /{' '}
-            <Link to="/admin/product"><span>Sản phẩm</span></Link>
+            <span>Sản phẩm</span>
           </div>
           <Link to="/admin/product/add" className="btn-link-wrapper">
             <button className="btn-add-product">Thêm sản phẩm</button>
@@ -97,7 +220,7 @@ class Product extends Component {
         <div className="product-list float-left">
           <h2 className="product-title">Danh sách sản phẩm</h2>
           {this.state.products.length === 0 ? (
-            <div className="loading">Loading products...</div>
+            <div className="loading">Đang tải sản phẩm...</div>
           ) : (
             <table className="product-table">
               <thead>
@@ -115,145 +238,11 @@ class Product extends Component {
             </table>
           )}
         </div>
-
-
-        {this.state.successMessage && (
-        <div className="alert-success global-msg">
-          {this.state.successMessage}
-        </div>
-        )}
         <div className="pagination">{pagination}</div>
         <div className="float-clear" />
       </div>
     );
   }
-
-  componentDidMount() {
-    this.apiGetProducts(this.state.curPage);
-    // Kiểm tra xem categories đã được tải chưa
-    if (Array.isArray(this.context.categories) && this.context.categories.length > 0) {
-      this.setState({ categoriesLoaded: true });
-    } else {
-      this.apiGetCategories();
-    }
-  }
-
-  trItemClick = (item) => {
-    this.setState({ itemSelected: item });
-  };
-
-  apiGetCategories() {
-    axios
-      .get(`/api/admin/categories`)
-      .then((res) => {
-        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-          this.context.setCategories(res.data);
-          this.setState({ categoriesLoaded: true, categoriesError: '' });
-        } else {
-          this.setState({
-            categoriesLoaded: true,
-            categoriesError: 'No categories found.',
-          });
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching categories:', error);
-        this.setState({
-          categoriesLoaded: true,
-          categoriesError: 'Failed to load categories. Please try again later.',
-        });
-      });
-  }
-
-  handleDelete = (id) => {
-  if (!id) {
-    console.error("Invalid product ID:", id);
-    alert("Product ID is invalid.");
-    return;
-  }
-
-  // Hỏi xác nhận trước khi xóa
-  const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
-  if (!confirmDelete) {
-    return; // Hủy xóa nếu người dùng chọn Cancel
-  }
-  axios
-    .delete(`/api/admin/products/${id}`)
-    .then((res) => {
-      if (res.status === 200) {
-        // Cập nhật lại danh sách sản phẩm
-        this.apiGetProducts(this.state.curPage);
-        alert("Xóa sản phẩm thành công!");
-      } else {
-        alert("Xóa sản phẩm thất bại.");
-      }
-    })
-    .catch((error) => {
-      console.error("Delete failed:", error);
-      alert("Đã xóa thành công rồi. Hãy reset lại trang để xem lại danh sách sản phẩm.");
-    });
-};
-
-
-  confirmDelete = () => {
-    const { confirmDeleteId } = this.state;
-    axios
-      .delete(`/api/admin/products/${confirmDeleteId}`)
-      .then((res) => {
-        if (res.data) {
-          this.apiGetProducts(this.state.curPage);
-          this.setState({
-            successMessage: 'Product deleted successfully!',
-            showConfirmDeleteModal: false,
-            confirmDeleteId: null,
-          });
-          setTimeout(() => {
-            this.setState({ successMessage: '' });
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        console.error('Error deleting product:', error);
-      });
-  };
-
-  cancelDelete = () => {
-    this.setState({
-      showConfirmDeleteModal: false,
-      confirmDeleteId: null,
-    });
-  };
-
-  lnkPageClick(page) {
-    this.apiGetProducts(page);
-  }
-
-  apiGetProducts(page) {
-  // Kiểm tra giá trị page trước khi thực hiện yêu cầu
-  if (page === undefined || page <= 0) {
-    console.error("Invalid page value:", page);
-    return; // Dừng lại nếu page không hợp lệ
-  }
-  axios
-    .get(`/api/admin/products?page=${page}`)
-    .then((res) => {
-      const result = res.data;
-      console.log("API result:", res.data);
-      const pageSize = result.pageSize || 10;
-      const totalItems = result.totalItems || 0;
-      const noPages = Math.ceil(totalItems / pageSize);
-
-      this.setState({
-        products: result.products,
-        curPage: result.page || 1,
-        noPages: noPages,
-      });
-    })
-    .catch((error) => {
-      console.error('Error fetching products:', error);
-    });
-}
-
 }
 
 export default Product;

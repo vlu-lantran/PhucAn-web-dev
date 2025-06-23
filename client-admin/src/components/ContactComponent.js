@@ -16,7 +16,7 @@ class ContactComponent extends Component {
 
   fetchContacts = async () => {
     try {
-      const response = await axios.get('/api/admin/contacts');
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/contacts`);
       this.setState({
         contactList: response.data,
         loading: false,
@@ -33,7 +33,7 @@ class ContactComponent extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa liên hệ này?');
     if (confirmDelete) {
       try {
-        await axios.delete(`/api/admin/contacts/${id}`);
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/contacts/${id}`);
         this.fetchContacts();
       } catch (error) {
         alert('Xóa thất bại.');

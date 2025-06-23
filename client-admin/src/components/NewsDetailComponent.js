@@ -42,7 +42,7 @@ class NewsDetailComponent extends Component {
   loadNews = async () => {
     const { id } = this.props.params;
     try {
-      const response = await axios.get(`/api/admin/news/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/news/${id}`);
       const news = response.data;
       this.setState({
         title: news.title,
@@ -81,9 +81,9 @@ class NewsDetailComponent extends Component {
     try {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
-        await axios.put(`/api/admin/news/${id}`, newsData);
+        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/admin/news/${id}`, newsData);
       } else {
-        await axios.post('/api/admin/news', newsData);
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/news`, newsData);
       }
 
       this.setState({ success: true, error: null });

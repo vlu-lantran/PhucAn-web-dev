@@ -48,7 +48,7 @@ class ProductDetail extends Component {
   // API: Lấy thông tin sản phẩm theo ID
   apiGetProductById(id) {
     axios
-      .get(`/api/customer/products/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/products/${id}`)
       .then((res) => {
         const result = res.data;
         this.setState({ product: result });

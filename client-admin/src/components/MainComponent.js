@@ -10,26 +10,20 @@ import Order from './OrderComponent';
 import Customer from './CustomerComponent';
 import CategoryDetail from './CategoryDetailComponent'; 
 import ProductDetail from './ProductDetailComponent';
-import News from './NewsComponent'; // Import News Component
-import NewsDetail from './NewsDetailComponent'; // Import News Detail Component
-import Brand from './BrandComponent'; // Import Brand Component
-import BrandDetail from './BrandDetailComponent'; // Import Brand Detail Component
-import Contact from './ContactComponent'; // Import Contact Component
-import ContactDetail  from './ContactDetailComponent';
-import Slider from './SliderComponent'; // Import Slider Component
-import SliderDetail from './SliderDetailComponent'; // Import Slider Detail Component
+import News from './NewsComponent';
+import NewsDetail from './NewsDetailComponent';
+import Brand from './BrandComponent';
+import BrandDetail from './BrandDetailComponent';
+import Contact from './ContactComponent';
+import ContactDetail from './ContactDetailComponent';
+import Slider from './SliderComponent';
+import SliderDetail from './SliderDetailComponent';
 
 class Main extends Component {
   static contextType = MyContext;
 
   render() {
     if (this.context.token !== '') {
-      // Nếu đang ở trang gốc "/" thì redirect sang "/admin/home"
-      if (window.location.pathname === '/admin/home' || window.location.pathname === '/admin/home/') {
-        // không làm gì
-      } else {
-        return <Navigate to="/admin/home" replace />;
-      }
       return (
         <div className="body-admin">
           <Menu />
@@ -38,44 +32,30 @@ class Main extends Component {
             <Route path="/" element={<Navigate replace to="/admin/home" />} />
             <Route path="/admin/home" element={<Home />} />
             <Route path="/admin/category" element={<Category />} />
-            <Route path="/admin/category/edit/:id" element={<CategoryDetail mode="edit" />} /> {/* Sửa tin tức */}
-            <Route
-              path="/admin/category/add"
-              element={<CategoryDetail mode="add" />} // Chế độ "Add"
-            />
+            <Route path="/admin/category/add" element={<CategoryDetail mode="add" />} />
+            <Route path="/admin/category/edit/:id" element={<CategoryDetail mode="edit" />} />
             <Route path="/admin/product" element={<Product />} />
-            <Route
-              path="/admin/product/add"
-              element={<ProductDetail mode="add" />} // Chế độ "Add"
-            />
-            <Route path="/admin/product/edit/:id" element={<ProductDetail mode="edit" />} /> {/* Sửa tin tức */}
+            <Route path="/admin/product/add" element={<ProductDetail mode="add" />} />
+            <Route path="/admin/product/edit/:id" element={<ProductDetail mode="edit" />} />
             <Route path="/admin/order" element={<Order />} />
             <Route path="/admin/customer" element={<Customer />} />
-            
-            {/* Thêm các route cho tin tức */}
-            <Route path="/admin/news" element={<News />} /> {/* Danh sách tin tức */}
-            <Route path="/admin/news/add" element={<NewsDetail mode="add" />} /> {/* Thêm tin tức */}
-            <Route path="/admin/news/edit/:id" element={<NewsDetail mode="edit" />} /> {/* Sửa tin tức */}
-            
-
-            {/* Thêm các route cho thương hiệu */}
-            <Route path="/admin/brands" element={<Brand />} /> {/* Danh sách thương hiệu */}
-            <Route path="/admin/brands/add" element={<BrandDetail mode="add" />} /> {/* Thêm thương hiệu */}
-            <Route path="/admin/brands/edit/:id" element={<BrandDetail mode="edit" />} /> {/* Sửa thương hiệu */}
-
-            {/* Thêm các route cho Cộng tác */}
-            <Route path="/admin/contacts" element={<Contact />} /> {/* Danh sách thương hiệu */}
-            <Route path="/admin/contacts/add" element={<ContactDetail mode="add" />} /> {/* Thêm thương hiệu */}
-            <Route path="/admin/contacts/edit/:id" element={<ContactDetail mode="edit" />} /> {/* Sửa thương hiệu */}
-
-            {/* Thêm các route cho thương hiệu */}
-            <Route path="/admin/sliders" element={<Slider />} /> {/* Danh sách thương hiệu */}
-            <Route path="/admin/sliders/add" element={<SliderDetail mode="add" />} /> {/* Thêm thương hiệu */}
-            <Route path="/admin/sliders/edit/:id" element={<SliderDetail mode="edit" />} /> {/* Sửa thương hiệu */}
+            <Route path="/admin/news" element={<News />} />
+            <Route path="/admin/news/add" element={<NewsDetail mode="add" />} />
+            <Route path="/admin/news/edit/:id" element={<NewsDetail mode="edit" />} />
+            <Route path="/admin/brands" element={<Brand />} />
+            <Route path="/admin/brands/add" element={<BrandDetail mode="add" />} />
+            <Route path="/admin/brands/edit/:id" element={<BrandDetail mode="edit" />} />
+            <Route path="/admin/contacts" element={<Contact />} />
+            <Route path="/admin/contacts/add" element={<ContactDetail mode="add" />} />
+            <Route path="/admin/contacts/edit/:id" element={<ContactDetail mode="edit" />} />
+            <Route path="/admin/sliders" element={<Slider />} />
+            <Route path="/admin/sliders/add" element={<SliderDetail mode="add" />} />
+            <Route path="/admin/sliders/edit/:id" element={<SliderDetail mode="edit" />} />
           </Routes>
         </div>
       );
     }
+
     return <div />;
   }
 }

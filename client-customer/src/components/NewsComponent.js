@@ -33,8 +33,8 @@ const NewsComponent = () => {
     const fetchNews = async () => {
       try {
         const [hotRes, topRes] = await Promise.all([
-          fetch(`/api/customer/news/hot/3`),
-          fetch(`/api/customer/news/top/4`),
+          fetch(`${process.env.REACT_APP_API_BASE_URL}/api/customer/news/hot/3`),
+          fetch(`${process.env.REACT_APP_API_BASE_URL}/api/customer/news/top/4`),
         ]);
         const hotData = await hotRes.json();
         const topData = await topRes.json();

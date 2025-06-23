@@ -16,7 +16,7 @@ class News extends Component {
 
   fetchNews = async () => {
     try {
-      const response = await axios.get('/api/admin/news');
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/news`);
       this.setState({
         newsList: response.data,
         loading: false,
@@ -33,7 +33,7 @@ class News extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa tin tức này?');
     if (confirmDelete) {
       try {
-        await axios.delete(`/api/admin/news/${id}`);
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/news/${id}`);
         this.fetchNews();
       } catch (error) {
         alert('Xóa thất bại.');

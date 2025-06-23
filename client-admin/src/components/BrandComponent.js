@@ -16,7 +16,7 @@ class BrandComponent extends Component {
 
   fetchBrands = async () => {
     try {
-      const response = await axios.get(`/api/admin/brands`);
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/brands`);
       this.setState({
         brandList: response.data,
         loading: false,
@@ -33,8 +33,8 @@ class BrandComponent extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa thương hiệu này?');
     if (confirmDelete) {
       try {
-        const API = process.env.REACT_APP_API_BASE_URL || '';
-        await axios.delete(`${API}/api/admin/brands/${id}`);
+
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/brands/${id}`);
         this.fetchBrands();
       } catch (error) {
         alert('Xóa thất bại.');

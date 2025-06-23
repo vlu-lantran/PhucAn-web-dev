@@ -39,7 +39,7 @@ class SliderDetailComponent extends Component {
   loadSlider = async () => {
     const { id } = this.props.params;
     try {
-      const response = await axios.get(`/api/admin/sliders/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/sliders/${id}`);
       const slider = response.data;
       this.setState({
         name: slider.name,
@@ -73,9 +73,9 @@ class SliderDetailComponent extends Component {
     try {
       if (this.props.mode === 'edit') {
         const { id } = this.props.params;
-        await axios.put(`/api/admin/sliders/${id}`, sliderData);
+        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/admin/sliders/${id}`, sliderData);
       } else {
-        await axios.post('/api/admin/sliders', sliderData);
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/sliders`, sliderData);
       }
 
       this.setState({ success: true, error: null });

@@ -11,7 +11,7 @@ const NewsViewComponent = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(`/api/customer/news/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/news/${id}`);
         setNews(response.data);
       } catch (err) {
         setError('Không thể tải tin tức.');

@@ -16,8 +16,8 @@ class SliderComponent extends Component {
 
   fetchSliders = async () => {
     try {
-      const API = process.env.REACT_APP_API_BASE_URL || '';
-      const response = await axios.get(`${API}/api/admin/sliders`);
+
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/sliders`);
       this.setState({
         sliderList: response.data,
         loading: false,
@@ -34,7 +34,7 @@ class SliderComponent extends Component {
     const confirmDelete = window.confirm('Bạn có chắc muốn xóa thương hiệu này?');
     if (confirmDelete) {
       try {
-        await axios.delete(`/api/admin/sliders/${id}`);
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/admin/sliders/${id}`);
         this.fetchSliders();
       } catch (error) {
         alert('Xóa thất bại.');

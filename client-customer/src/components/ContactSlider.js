@@ -27,7 +27,7 @@ class ContactComponent extends Component {
   fetchContacts = async () => {
     try {
 
-      const response = await axios.get('/api/admin/contacts');
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/contacts`);
       const data = response.data;
       // Tối ưu số lần lặp lại dữ liệu
       const repeatedData = Array(6).fill(data).flat();

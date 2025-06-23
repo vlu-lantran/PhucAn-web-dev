@@ -68,7 +68,7 @@ class Order extends Component {
     this.setState({ loading: true });
     const config = { headers: { 'x-access-token': this.context.token } };
     axios
-      .get(`/api/admin/orders`, config)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/orders`, config)
       .then((res) => {
         this.setState({ orders: res.data, loading: false });
         toast.success('Lấy danh sách đơn hàng thành công!');
@@ -84,7 +84,7 @@ class Order extends Component {
     const body = { status };
     const config = { headers: { 'x-access-token': this.context.token } };
     axios
-      .put(`/api/admin/orders/status/${id}`, body, config)
+      .put(`${process.env.REACT_APP_API_BASE_URL}/api/admin/orders/status/${id}`, body, config)
       .then((res) => {
         if (res.data) {
           toast.success(`Đã ${status === 'APPROVED' ? 'duyệt' : 'hủy'} đơn hàng!`);
